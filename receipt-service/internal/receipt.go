@@ -1,10 +1,12 @@
 package internal
 
-import "errors"
-
 func Build(invoiceID ID, status Status) (string, error){
-	if !validate(invoiceID, status) {
-		return "", errors.New("ID or status is invalid")
+	if err := validateID(invoiceID); err != nil {
+		return "", err
+	}
+
+	if err := validateStatus(status); err != nil {
+		return "", err
 	}
 
 	return render(invoiceID, status), nil
