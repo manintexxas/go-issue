@@ -1,55 +1,79 @@
 package internal_test
 
 import (
+	"errors"
 	"testing"
 
 	in "receipt-service/internal"
-
 )
 
 func TestBuild(t *testing.T) {
 	tests := []struct {
-		name	string
-		id		in.ID
-		status	in.Status
-		want 	string
-		wantErr	bool
+		name    string
+		id      in.ID
+		status  in.Status
+		want    string
+		wantErr error
 	}{
 		{
-		name:	"paid",
-		id:		in.ID("INV-0001"),
-		status:	in.PAID,
-		want:	"Invoice: INV-0001\nStatus: PAID",
+			name:   "paid",
+			id:     in.ID("INV-0001"),
+			status: in.PAID,
+			want:   "Invoice: INV-0001\nStatus: PAID",
 		},
 		{
-		name:	"pending",
-		id:		in.ID("INV-0001"),
-		status:	in.PENDING,
-		want:	"Invoice: INV-0001\nStatus: PENDING",
+			name:   "pending",
+			id:     in.ID("INV-0001"),
+			status: in.PENDING,
+			want:   "Invoice: INV-0001\nStatus: PENDING",
 		},
 		{
-		name:	"failed",
-		id:		in.ID("INV-0001"),
-		status:	in.FAILED,
-		want:	"Invoice: INV-0001\nStatus: FAILED",
+			name:   "failed",
+			id:     in.ID("INV-0001"),
+			status: in.FAILED,
+			want:   "Invoice: INV-0001\nStatus: FAILED",
 		},
 		{
-		name:	"idTooShort",
-		id:		in.ID("INV-001"),
-		status:	in.PAID,
-		wantErr:true,
+			name:    "idTooShort",
+			id:      in.ID("INV-001"),
+			status:  in.PAID,
+			wantErr: in.ErrIDLengthNotValid,
 		},
 		{
-		name:	"idEmpty",
-		id:		"",
-		status:	in.PAID,
-		wantErr:true,
+			name:    "idEmpty",
+			id:      "",
+			status:  in.PAID,
+			wantErr: in.ErrIDLengthNotValid,
 		},
 		{
-		name:	"unkownStatus",
-		id:		in.ID("INV-0001"),
-		status:	in.UNKNOWN,
-		wantErr:true,
+			name:    "invalidPrefix",
+			id:      in.ID("ABC-0001"),
+			status:  in.PAID,
+			wantErr: in.ErrIDPrefixNotValid,
+		},
+		{
+			name:    "nonDigitID",
+			id:      in.ID("INV-00A1"),
+			status:  in.PAID,
+			wantErr: in.ErrIDContainsNonNumber,
+		},
+		{
+			name:    "unknownStatus",
+			id:      in.ID("INV-0001"),
+			status:  in.UNKNOWN,
+			wantErr: in.ErrStatusNotValid,
+		},
+		{
+			name:    "zeroStatus",
+			id:      in.ID("INV-0001"),
+			status:  in.Status(0),
+			wantErr: in.ErrStatusNotValid,
+		},
+		{
+			name:    "combinedStatus",
+			id:      in.ID("INV-0001"),
+			status:  in.Status(3),
+			wantErr: in.ErrStatusNotValid,
 		},
 	}
 
@@ -57,22 +81,24 @@ func TestBuild(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := in.Build(tt.id, tt.status)
 
-			if tt.want != "" {
-				if err != nil {
-					t.Errorf("%v", err)
-				}
-
-				if got != tt.want {
-					t.Errorf("\ngot: %q\nwant: %q", got, tt.want)
-				}
+			if !errors.Is(err, tt.wantErr) {
+				t.Fatalf(
+					"Build() error = %v, want error = %v",
+					err,
+					tt.wantErr,
+				)
 			}
 
-			if tt.wantErr {
-				if err == nil {
-					t.Errorf("Unexpected success: %q", got)
+			if tt.wantErr != nil {
+				if got != "" {
+					t.Errorf("Build() result = %q, want empty result", got)
 				}
+				return
+			}
+
+			if got != tt.want {
+				t.Errorf("Build() = %q, want %q", got, tt.want)
 			}
 		})
 	}
-	
 }
