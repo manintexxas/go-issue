@@ -1,11 +1,13 @@
 package internal
 
-import "fmt"
+import ("fmt"
+		"errors"
+)
 
-func Build(invoiceID ID, status Status) {
+func Build(invoiceID ID, status Status) (string, error){
 	if !validate(invoiceID, status) {
-		fmt.Printf("ID or status cannot empty ")
+		return "", errors.New("ID or status cannot empty")
 	}
 
-	fmt.Printf("%s", render(invoiceID, status))
+	return fmt.Sprintf("%s", render(invoiceID, status)), nil
 }
