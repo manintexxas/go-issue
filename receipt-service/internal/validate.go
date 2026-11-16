@@ -13,9 +13,5 @@ const (
 )
 func validate(invoiceID ID, status Status) bool {
 
-	if invoiceID == "" || status > FAILED {
-		return false
-	}
-
-	return true
+	return !(invoiceID == "" || len(invoiceID) != 8 || status > FAILED)
 }
