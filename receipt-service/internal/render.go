@@ -16,7 +16,7 @@ func render(invoiceID ID, status Status) string {
 		s = "FAILED"
 	}
 
-	output := fmt.Sprintf("Invoce: %s\nStatus: %s", invoiceID, s)
+	output := fmt.Sprintf("Invoice: %s\nStatus: %s", invoiceID, s)
 
 	return output
 }
