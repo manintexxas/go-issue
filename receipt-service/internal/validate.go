@@ -13,7 +13,7 @@ const (
 )
 func validate(invoiceID ID, status Status) bool {
 
-	if invoiceID == "" || status > UNKNOWN {
+	if invoiceID == "" || status > FAILED {
 		return false
 	}
 
