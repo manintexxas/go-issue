@@ -1,13 +1,11 @@
 package internal
 
-import ("fmt"
-		"errors"
-)
+import "errors"
 
 func Build(invoiceID ID, status Status) (string, error){
 	if !validate(invoiceID, status) {
-		return "", errors.New("ID or status cannot empty")
+		return "", errors.New("ID or status is invalid")
 	}
 
-	return fmt.Sprintf("%s", render(invoiceID, status)), nil
+	return render(invoiceID, status), nil
 }
