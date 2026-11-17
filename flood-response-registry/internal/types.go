@@ -84,15 +84,15 @@ type CapacitySource interface {
 // Intake and validation errors returned by the internal package.
 var (
 	ErrIDContainsNonNumber = errors.New("ID sequence number must contain digits only")
-	ErrIDLengthNotValid    = errors.New("Shelter ID must be exactly 8 bytes")
-	ErrIDFormatInvalid     = errors.New("Shelter ID format is invalid")
-	ErrIDPrefixInvalid     = errors.New("Shelter ID prefix is invalid")
+	ErrIDLengthNotValid    = errors.New("shelter ID must be exactly 8 bytes")
+	ErrIDFormatInvalid     = errors.New("shelter ID format is invalid")
+	ErrIDPrefixInvalid     = errors.New("shelter ID prefix is invalid")
 
-	ErrShelterCapFormatInavalid = errors.New("Shelter cap format is invalid")
-	ErrShelterCapOutOfRange     = errors.New("Shelter capacity must be between 1 and 10000")
-	ErrShelterCapCannotEmpty    = errors.New("Shelter capacity cannot be empty")
-	ErrShelterContainsNonNumber = errors.New("Shelter cap must contain digits only")
+	ErrShelterCapFormatInvalid  = errors.New("shelter capacity format is invalid")
+	ErrShelterCapOutOfRange     = errors.New("shelter capacity must be between 1 and 10000")
+	ErrShelterCapCannotEmpty    = errors.New("shelter capacity cannot be empty")
+	ErrShelterContainsNonNumber = errors.New("shelter capacity must contain digits only")
 
-	ErrIDAlreadyBeenReport = errors.New("ID already have been use")
-	ErrRequestEmpty        = errors.New("ID or cap request cannot be empty")
+	ErrIDAlreadyReported = errors.New("shelter ID has already been reported")
+	ErrRequestEmpty      = errors.New("intake request cannot be empty")
 )
