@@ -96,6 +96,7 @@ Practical exercises are maintained as part of the learning process. They are int
 | Exercise | Subject | Concepts Applied | Status |
 | --- | --- | --- | --- |
 | Receipt Generator | Package & Module Fundamentals | Defined types, constants, package visibility, closures, anonymous functions, validation, error handling, rendering, and table-driven testing. | Completed |
+| Shelter Management System | Go Interfaces & Application Development | Custom types, typed constants, bit flags, interfaces, closures, anonymous functions, random data generation, type assertions, type switches, data normalization, input validation, error handling, in-memory registry using maps, CLI development, record creation and retrieval, status management, table-driven testing, contract-based testing, coverage analysis, and Go documentation comments. | Completed |
 
 Additional exercises will be recorded as the learning roadmap progresses.
 
