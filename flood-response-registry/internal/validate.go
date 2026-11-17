@@ -1,27 +1,46 @@
 package internal
 
-func validateShelterID(raw any) error {
+func prefixCheck(prefix string) bool{
+	switch prefix {
+	case "MBL-", "CSV-", "NGO-":
+		return true
+
+	default:
+		return false
+	}
+}
+
+func validateShelterID(raw any) (ShelterID, error)  {
 	r, ok := raw.(string)
 
 	if !ok {
-		return ErrIDFormatInvalid
+		return "", ErrIDFormatInvalid
 	}
 
-	if len(r) != 9 {
-		return ErrIDLengthNotValid
+	if len(r) != 8 {
+		return "", ErrIDLengthNotValid
 	}
 
-	if err := normalize(r[:5]); err != nil {
-		return ErrIDContainsNonNumber
+	if !prefixCheck(r[:4]) {
+		return "", ErrIDPrefixInvalid
 	}
+	
+	for i := 4; i < 8; i++{
+		if r[i] < 0x30 || r[i] > 0x39 {
+				return "", ErrShelterContainsNonNumber
+			}
+	} 
 
-	return nil
+	return ShelterID(r), nil
 }
 
-func validateShelterCap(raw any) error {
-	if err := normalize(raw); err != nil {
-		return err
+func validateShelterCap(raw any) (ShelterCapacity, error) {
+	r, err := normalize(raw)
+	
+	if err != nil {
+		return 0, err
 	}
 
-	return nil
+	return ShelterCapacity(r), nil
 }
+
