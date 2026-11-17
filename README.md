@@ -39,7 +39,7 @@ The roadmap is organized into progressive learning areas. Completion indicates t
 | Day | Topic | Learning Scope | Status |
 | ---: | --- | --- | --- |
 | 01 | Project Structure, Packages & Modules | Project organization, package boundaries, module management, `go.mod`, `go.sum`, imports, and toolchain fundamentals. | Completed |
-| 02 | Type System & Zero Values | Built-in types, defined types, zero values, conversions, `nil`, and integer overflow. | Planned |
+| 02 | Type System & Zero Values | Built-in types, defined types, zero values, conversions, `nil`, and integer overflow. | Completed |
 | 03 | Arrays & Slices | Array semantics, slice internals, capacity, allocation, and aliasing. | Planned |
 | 04 | Maps | Map behavior, key constraints, lookup, mutation, and iteration. | Planned |
 | 05 | Strings, Bytes & Runes | String representation, UTF-8, byte indexing, rune iteration, and conversion. | Planned |
