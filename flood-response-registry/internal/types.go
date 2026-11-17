@@ -1,11 +1,11 @@
 package internal
 
-import "time"
+import "errors"
 
 type (
-	LegacyShelterID = string
+	second			= uint8
 
-	ShelterID       LegacyShelterID
+	ShelterID       string
 	ShelterCapacity uint16
 	ReportStatus    uint8
 )
@@ -18,15 +18,27 @@ const (
 )
 
 type ShelterRecord struct {
+	Creat	second
+	Update	second
+
 	ID		ShelterID
 	Cap		ShelterCapacity
 	Status	ReportStatus
-
-	Date	time.Time
 }
 
-type CapaitySource interface {
+type CapacitySource interface {
 	SourceName() 	string
 	RawShelterID() 	any
 	RawCapacity() 	any
 }
+
+var (
+	ErrIDContainsNonNumber			= errors.New("ID sequence number must contain digits only")
+	ErrIDLengthNotValid				= errors.New("Shelter ID must be exactly 9 bytes")
+	ErrIDFormatInvalid				= errors.New("Shelter ID format is invalid")
+
+	ErrShelterCapFormatInavalid		= errors.New("Shelter cap format is invalid")
+	ErrShelterCapOutOfRange 		= errors.New("Shelter capacity must be between 1 and 10000")
+	ErrShelterCapCannotEmpty		= errors.New("Shelter capacity cannot be empty")
+	ErrShelterContainsNonNumber		= errors.New("Shelter cap must contain digits only")
+)
