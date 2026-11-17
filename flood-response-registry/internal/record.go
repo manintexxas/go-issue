@@ -2,6 +2,9 @@ package internal
 
 import "time"
 
+// CreatedRecord processes a source, validates its shelter ID and capacity,
+// rejects duplicate IDs, and stores a new PENDING record in Dict. On success,
+// it returns the same record pointer stored in the registry.
 func CreatedRecord(c CapacitySource) (*ShelterRecord, error) {
 	tg, i, cp, err := ProccessSource(c)
 
@@ -17,9 +20,9 @@ func CreatedRecord(c CapacitySource) (*ShelterRecord, error) {
 
 	if _, ok := Dict[id]; ok {
 		return nil, ErrIDAlreadyBeenReport
-	} 
+	}
 
-	cap, err := validateShelterCap(cp)
+	capacity, err := validateShelterCap(cp)
 
 	if err != nil {
 		return nil, err
@@ -27,9 +30,9 @@ func CreatedRecord(c CapacitySource) (*ShelterRecord, error) {
 
 	s := &ShelterRecord{
 		Update: time.Now(),
-		Tag:	tg,
-		ID:		id,
-		Cap: 	cap,
+		Tag:    tg,
+		ID:     id,
+		Cap:    capacity,
 		Status: PENDING,
 	}
 
