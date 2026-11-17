@@ -2,6 +2,9 @@ package internal
 
 import "strconv"
 
+// normalize accepts the numeric types used by the supported intake sources,
+// converts them to uint16, and enforces the inclusive capacity range 1..10000.
+// String values must contain decimal digits only and must also fit in int.
 func normalize(value any) (uint16, error) {
 	switch v := value.(type) {
 	case int8:
@@ -45,7 +48,7 @@ func normalize(value any) (uint16, error) {
 		}
 
 		return uint16(v), nil
-		
+
 	case int:
 		if !(v <= 10_000 && v >= 1) {
 			return 0, ErrShelterCapOutOfRange
@@ -100,5 +103,4 @@ func normalize(value any) (uint16, error) {
 	default:
 		return 0, ErrShelterCapFormatInavalid
 	}
-
 }
