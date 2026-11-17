@@ -180,7 +180,7 @@ type IntakeResult struct {
 // processIntake sends one source through the internal record-creation flow.
 // It prints the outcome and returns true only when the record is accepted.
 func processIntake(source internal.CapacitySource, name string) bool {
-	record, err := internal.CreatedRecord(source)
+	record, err := internal.CreateRecord(source)
 
 	if err != nil {
 		fmt.Printf("[REJECTED] %s: %v\n", name, err)

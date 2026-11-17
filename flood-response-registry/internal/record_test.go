@@ -18,14 +18,14 @@ func isolateDict(t *testing.T) {
 	})
 }
 
-func assertCreatedRecordError(
+func assertCreateRecordError(
 	t *testing.T,
 	source CapacitySource,
 	wantErr error,
 ) {
 	t.Helper()
 
-	got, err := CreatedRecord(source)
+	got, err := CreateRecord(source)
 
 	if !errors.Is(err, wantErr) {
 		t.Fatalf("error = %v, want %v", err, wantErr)
@@ -40,7 +40,7 @@ func assertCreatedRecordError(
 	}
 }
 
-func TestCreatedRecordSuccess(t *testing.T) {
+func TestCreateRecordSuccess(t *testing.T) {
 	tests := []struct {
 		name    string
 		source  CapacitySource
@@ -84,14 +84,14 @@ func TestCreatedRecordSuccess(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			isolateDict(t)
 
-			got, err := CreatedRecord(tt.source)
+			got, err := CreateRecord(tt.source)
 
 			if err != nil {
-				t.Fatalf("CreatedRecord() unexpected error: %v", err)
+				t.Fatalf("CreateRecord() unexpected error: %v", err)
 			}
 
 			if got == nil {
-				t.Fatal("CreatedRecord() returned nil record")
+				t.Fatal("CreateRecord() returned nil record")
 			}
 
 			if got.ID != tt.wantID {
@@ -125,7 +125,7 @@ func TestCreatedRecordSuccess(t *testing.T) {
 	}
 }
 
-func TestCreatedRecordCapacityTypes(t *testing.T) {
+func TestCreateRecordCapacityTypes(t *testing.T) {
 	tests := []struct {
 		name string
 		cap  any
@@ -155,10 +155,10 @@ func TestCreatedRecordCapacityTypes(t *testing.T) {
 				Capacity:  tt.cap,
 			}
 
-			got, err := CreatedRecord(source)
+			got, err := CreateRecord(source)
 
 			if err != nil {
-				t.Fatalf("CreatedRecord() unexpected error: %v", err)
+				t.Fatalf("CreateRecord() unexpected error: %v", err)
 			}
 
 			if got.Cap != tt.want {
@@ -178,7 +178,7 @@ func TestCreatedRecordCapacityTypes(t *testing.T) {
 	}
 }
 
-func TestCreatedRecordEmptySource(t *testing.T) {
+func TestCreateRecordEmptySource(t *testing.T) {
 	tests := []struct {
 		name   string
 		source PartnerPayload
@@ -202,12 +202,12 @@ func TestCreatedRecordEmptySource(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			isolateDict(t)
-			assertCreatedRecordError(t, tt.source, ErrRequestEmpty)
+			assertCreateRecordError(t, tt.source, ErrRequestEmpty)
 		})
 	}
 }
 
-func TestCreatedRecordInvalidID(t *testing.T) {
+func TestCreateRecordInvalidID(t *testing.T) {
 	tests := []struct {
 		name string
 		id   any
@@ -228,12 +228,12 @@ func TestCreatedRecordInvalidID(t *testing.T) {
 				Capacity:  uint16(100),
 			}
 
-			assertCreatedRecordError(t, source, tt.want)
+			assertCreateRecordError(t, source, tt.want)
 		})
 	}
 }
 
-func TestCreatedRecordInvalidCapacity(t *testing.T) {
+func TestCreateRecordInvalidCapacity(t *testing.T) {
 	tests := []struct {
 		name string
 		cap  any
@@ -272,7 +272,7 @@ func TestCreatedRecordInvalidCapacity(t *testing.T) {
 		{"string contains non-number", "12A", ErrShelterContainsNonNumber},
 		{"string integer overflow", strings.Repeat("9", 100), ErrIDContainsNonNumber},
 
-		{"unsupported type", true, ErrShelterCapFormatInavalid},
+		{"unsupported type", true, ErrShelterCapFormatInvalid},
 	}
 
 	for _, tt := range tests {
@@ -284,12 +284,12 @@ func TestCreatedRecordInvalidCapacity(t *testing.T) {
 				Capacity:  tt.cap,
 			}
 
-			assertCreatedRecordError(t, source, tt.want)
+			assertCreateRecordError(t, source, tt.want)
 		})
 	}
 }
 
-func TestCreatedRecordDuplicateID(t *testing.T) {
+func TestCreateRecordDuplicateID(t *testing.T) {
 	isolateDict(t)
 
 	id := ShelterID("NGO-0004")
@@ -308,10 +308,10 @@ func TestCreatedRecordDuplicateID(t *testing.T) {
 		Capacity:  uint16(200),
 	}
 
-	got, err := CreatedRecord(source)
+	got, err := CreateRecord(source)
 
-	if !errors.Is(err, ErrIDAlreadyBeenReport) {
-		t.Fatalf("error = %v, want %v", err, ErrIDAlreadyBeenReport)
+	if !errors.Is(err, ErrIDAlreadyReported) {
+		t.Fatalf("error = %v, want %v", err, ErrIDAlreadyReported)
 	}
 
 	if got != nil {
