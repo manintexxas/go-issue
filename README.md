@@ -40,7 +40,7 @@ The roadmap is organized into progressive learning areas. Completion indicates t
 | ---: | --- | --- | --- |
 | 01 | Project Structure, Packages & Modules | Project organization, package boundaries, module management, `go.mod`, `go.sum`, imports, and toolchain fundamentals. | Completed |
 | 02 | Type System & Zero Values | Built-in types, defined types, zero values, conversions, `nil`, and integer overflow. | Completed |
-| 03 | Arrays & Slices | Array semantics, slice internals, capacity, allocation, and aliasing. | Planned |
+| 03 | Arrays & Slices | Array semantics, slice internals, capacity, allocation, and aliasing. | Completed |
 | 04 | Maps | Map behavior, key constraints, lookup, mutation, and iteration. | Planned |
 | 05 | Strings, Bytes & Runes | String representation, UTF-8, byte indexing, rune iteration, and conversion. | Planned |
 | 06 | Pointers & Aliasing | Memory addresses, pointer semantics, mutation, and shared data. | Planned |
@@ -97,6 +97,7 @@ Practical exercises are maintained as part of the learning process. They are int
 | --- | --- | --- | --- |
 | Receipt Generator | Package & Module Fundamentals | Defined types, constants, package visibility, closures, anonymous functions, validation, error handling, rendering, and table-driven testing. | Completed |
 | Shelter Management System | Go Interfaces & Application Development | Custom types, typed constants, bit flags, interfaces, closures, anonymous functions, random data generation, type assertions, type switches, data normalization, input validation, error handling, in-memory registry using maps, CLI development, record creation and retrieval, status management, table-driven testing, contract-based testing, coverage analysis, and Go documentation comments. | Completed |
+| Regional Emergency Broadcast Dispatcher | Go Arrays & Slices | Array value semantics, slice descriptors, backing arrays, length and capacity, append behavior, slice aliasing, full slice expressions, shallow copying, `make`, `copy`, independent snapshots, slice deletion, package API design, internal package organization, CLI development, validation, error handling, and API test design. | Completed |
 
 Additional exercises will be recorded as the learning roadmap progresses.
 
