@@ -135,7 +135,7 @@ func TestRecipients(t *testing.T) {
 	})
 
 	t.Run("append with insufficient capacity", func(t *testing.T) {
-		queue := make(Queue, 2, 2)
+		queue := make(Queue, 2)
 		queue[0] = "REG-001"
 		queue[1] = "REG-002"
 
